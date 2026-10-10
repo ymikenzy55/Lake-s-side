@@ -11,7 +11,7 @@
 | Input | zod on every action; text sanitised; redirects restricted to same-site paths; CTA links restricted to http(s)/relative |
 | Payments | Server recomputes totals; Paystack amount + currency verified on callback and webhook; webhook HMAC-SHA512 verified with timing-safe compare; marking paid is idempotent |
 | Stock | Reservation is one atomic SQL `UPDATE ... WHERE available >= qty`, so concurrent buyers cannot oversell |
-| Uploads | Admin only; magic-byte sniffing (JPEG/PNG/WebP), 5 MB cap, random file names, SVG uploads refused |
+| Uploads | Admin only; magic-byte sniffing (JPEG/PNG/WebP), 4 MB cap, random file names, SVG uploads refused |
 | Guest orders | Confirmation page requires an HMAC-signed cookie; tracking needs order number + email |
 | Headers | CSP, HSTS (prod), X-Frame-Options, nosniff, Referrer-Policy, Permissions-Policy, COOP |
 | Forms | Credential forms are `method="post"` so a slow hydration can never put a password in the URL |

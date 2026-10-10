@@ -16,7 +16,7 @@ export const PASSWORD_RESET_TOKEN_DURATION = 60 * 60 * 1000;
 
 export const DEFAULT_LOW_STOCK_THRESHOLD = 5;
 
-export const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
+export const MAX_IMAGE_SIZE = 4 * 1024 * 1024;
 export const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
 
 export const DEFAULT_SHIPPING_FEE = 20;

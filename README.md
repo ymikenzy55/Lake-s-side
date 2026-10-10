@@ -88,6 +88,8 @@ Open [http://localhost:3100](http://localhost:3100). The health endpoint is avai
 
 `db:push` is intended for local development. Review [Deployment](docs/DEPLOYMENT.md) before configuring a production environment.
 
+For Vercel setup, production environment variables, and database migrations, see the [Vercel deployment guide](docs/DEPLOYMENT.md).
+
 ## Development commands
 
 | Command | Purpose |

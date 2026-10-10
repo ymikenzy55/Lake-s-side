@@ -22,7 +22,7 @@ const cloudinaryReady = () =>
  */
 export async function storeImage(file: File, folder = 'products'): Promise<string> {
   if (file.size === 0) throw new UploadError('The file is empty');
-  if (file.size > MAX_IMAGE_SIZE) throw new UploadError('Image must be 5MB or smaller');
+  if (file.size > MAX_IMAGE_SIZE) throw new UploadError('Image must be 4MB or smaller');
   const buf = Buffer.from(await file.arrayBuffer());
   const kind = sniff(buf);
   if (!kind) throw new UploadError('Only JPG, PNG or WebP images are allowed');

@@ -79,7 +79,7 @@ export async function deleteImage(publicId: string): Promise<void> {
  */
 export function validateImage(file: File): { valid: boolean; error?: string } {
   const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
-  const maxSize = 5 * 1024 * 1024; // 5MB
+  const maxSize = 4 * 1024 * 1024; // Keep uploads below Vercel's function body-size limit.
 
   if (!allowedTypes.includes(file.type)) {
     return {
@@ -91,7 +91,7 @@ export function validateImage(file: File): { valid: boolean; error?: string } {
   if (file.size > maxSize) {
     return {
       valid: false,
-      error: 'File too large. Maximum size is 5MB.',
+      error: 'File too large. Maximum size is 4MB.',
     };
   }
 

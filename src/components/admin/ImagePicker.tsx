@@ -51,7 +51,7 @@ export function ImagePicker({ onUploaded, folder = 'products', max = 20 }: { onU
           <rect x="3" y="3" width="18" height="18" rx="3" /><circle cx="9" cy="9" r="1.6" /><path d="m21 15-5-5L5 21" />
         </svg>
         <span className="text-[14px] font-semibold">{busy ? status : 'Choose photos'}</span>
-        <span className="text-[12px] text-muted">Tap to pick from your device, or drag them here. JPG, PNG or WebP, up to 5 MB each.</span>
+        <span className="text-[12px] text-muted">Tap to pick from your device, or drag them here. JPG, PNG or WebP, up to 4 MB each.</span>
         <input ref={input} type="file" accept="image/jpeg,image/png,image/webp" multiple className="sr-only" disabled={busy} onChange={(e) => e.target.files && void upload(e.target.files)} />
       </label>
       <p role="status" className="mt-1.5 min-h-4 text-[12px] text-ok">{!busy && status}</p>

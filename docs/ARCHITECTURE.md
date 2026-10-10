@@ -1,54 +1,48 @@
 # Architecture
 
-Next.js 16 (App Router) + Prisma 5 + PostgreSQL (Neon) + Tailwind 4. Server Actions for mutations, Server Components for reads.
+Comfort_fit GH uses the Next.js App Router for its storefront, administrative interface, and server-side application logic. React Server Components handle data-backed pages; Server Actions and Route Handlers handle mutations and HTTP integrations. Prisma provides typed PostgreSQL access.
 
-## Folder structure
+## Project structure
 
-```
+```text
 prisma/
-  schema.prisma          data model + indexes
-  seed.ts                idempotent seed (admin from env, reference data, demo catalogue)
-  sql/search-indexes.sql trigram / partial indexes Prisma cannot express (npm run db:indexes)
+  schema.prisma          Data model
+  seed.ts                Initial administrator and catalogue data
+  sql/                   PostgreSQL-specific indexes
+docs/                    Project, API, security, and operations documentation
+scripts/                 Development and smoke-test utilities
+tests/                   Vitest tests
 src/
   app/
-    (store)/             public storefront (header, footer, mobile tab bar)
-      page.tsx           home: hero slider, categories, new arrivals
-      products/          listing + [slug] detail
-      cart/ checkout/    bag, checkout, /verify (Paystack callback), /success
-      track/ account/    guest tracking, customer area
-      about/             philosophy, size guide, delivery, returns
-    (auth)/              login, register, forgot-password, reset-password
-    admin/               responsive back-office (guarded in layout + every action)
-    api/                 session, health, search-index, admin/upload + admin/stream (SSE), orders/<id>/stream (SSE), webhooks/paystack
-    (store)/receipt/     printable receipt
+    (auth)/              Sign-in, registration, and password recovery
+    (store)/             Public storefront, checkout, accounts, and tracking
+    admin/               Store-management pages
+    api/                 Route Handlers for health, sessions, webhooks, and events
+    uploads/             Local image-serving route
   components/
-    brand/               Logo
-    svg/                 procedural garment art, hero figure, ProductArt resolver
-    layout/              header, footer, bottom nav, session provider, analytics
-    store/               product card/detail, hero slider, cart, checkout, order views
-    admin/               shell, editors, managers, shared hooks
-    ui/                  small shared primitives (Reveal)
-    auth/                auth forms
-  domains/               business logic, one folder per area: service.ts (+ actions.ts)
-    auth cart checkout discounts hero inventory notifications
-    orders products settings users admin (guard + catalog/content actions)
-  services/              third-party adapters: brevo, paystack, cloudinary, storage
-  lib/
-    auth/ security/      sessions, password, tokens, rate limit, sanitisers
-    realtime.ts          in-process pub/sub behind the SSE routes
-    order-access.ts      who may see an order (owner / admin / signed guest grant)
-    config/ constants/   brand + constants
-    validations/         zod schemas
-    db.ts utils/
-  proxy.ts               optimistic edge redirects (Next 16 "proxy", formerly middleware)
-tests/                   vitest unit tests
+    admin/ auth/ brand/ layout/ store/ svg/ ui/
+  domains/               Business logic and server actions by domain
+  lib/                   Database, authentication, security, validation, and utilities
+  services/              Paystack, email, Cloudinary, and storage adapters
 ```
 
-## Rules of thumb
-- Prices, stock and discounts are always re-read from the database on the server; the client never supplies them.
-- `domains/*/service.ts` holds logic and may be called from pages; `actions.ts` files are the only things exposed to the browser.
-- Every admin mutation goes through `adminAction()` (authorise, validate, audit, safe error mapping).
-- Public pages avoid `cookies()` so they can be cached (ISR); per-visitor state (user, bag count) is loaded from `/api/session`.
+## Request and business-logic boundaries
 
-## Imagery
-Product pictures are `ProductImage.imageUrl`. A value of `svg:front|back|detail|studio` renders vector garment art for the product's `garmentType`, tinted with the colour the shopper selected. Anything else is a real photo (upload or https URL). The hero uses a layered SVG figure unless a transparent cut-out photo is uploaded.
+- Pages and components focus on rendering and user interaction.
+- `src/domains/` owns feature-specific operations and server-side business rules.
+- `src/services/` isolates third-party providers and storage implementations.
+- `src/lib/` contains shared infrastructure, authentication, security controls, and validation.
+- `src/app/api/` exposes purpose-specific HTTP endpoints and webhooks.
+
+## Important data and security decisions
+
+- The server reloads product, price, inventory, and discount data when processing cart and checkout requests; client-submitted totals are not trusted.
+- Admin operations perform server-side authorization and validation.
+- Inventory reservations use a conditional database update to prevent concurrent orders from overselling stock.
+- Paystack payment state is verified server-side before an order is marked paid.
+- Guest order pages use signed access grants rather than relying on an order number alone.
+- Local product uploads are stored outside the source tree in `uploads/`; use durable object storage for serverless deployments.
+
+## Product imagery
+
+Product images are associated with products in the database. The storefront supports uploaded or remote images and generated garment artwork, allowing catalogue items to use either photography or product-specific illustrations.

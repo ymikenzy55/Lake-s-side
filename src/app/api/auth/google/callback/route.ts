@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { timingSafeEqual } from 'crypto';
-import { googleConfigured, googleProfileFromCode } from '@/services/google';
+import { googleConfigured, googleProfileFromCode, googleRedirectUri, requestOrigin } from '@/services/google';
 import { AuthService, AuthServiceError } from '@/domains/auth/service';
 import { safeRedirectPath } from '@/lib/security/sanitize';
 
@@ -13,8 +13,9 @@ const sameString = (a: string, b: string) => a.length === b.length && timingSafe
 /** Google redirects here after the visitor picks an account. */
 export async function GET(request: NextRequest) {
   const sp = request.nextUrl.searchParams;
+  const origin = requestOrigin(request.headers);
   const fail = (code: string) => {
-    const url = new URL('/login', request.url);
+    const url = new URL('/login', origin);
     url.searchParams.set('error', code);
     const res = NextResponse.redirect(url);
     res.cookies.delete({ name: STATE_COOKIE, path: '/api/auth/google' });
@@ -24,7 +25,7 @@ export async function GET(request: NextRequest) {
   if (!googleConfigured()) return fail('google_unavailable');
   if (sp.get('error')) return fail('google_cancelled'); // e.g. access_denied when the visitor backs out
 
-  let saved: { state?: string; verifier?: string; redirect?: string } = {};
+  let saved: { state?: string; verifier?: string; redirect?: string; callback?: string } = {};
   try {
     saved = JSON.parse(request.cookies.get(STATE_COOKIE)?.value ?? '{}');
   } catch {
@@ -36,11 +37,11 @@ export async function GET(request: NextRequest) {
   if (!code || !saved.state || !saved.verifier || !sameString(state, saved.state)) return fail('google_expired');
 
   try {
-    const profile = await googleProfileFromCode(code, saved.verifier);
+    const profile = await googleProfileFromCode(code, saved.verifier, saved.callback ?? googleRedirectUri(origin));
     const user = await AuthService.loginWithGoogle(profile);
     const admin = user.role === 'ADMIN' || user.role === 'SUPER_ADMIN';
     const dest = safeRedirectPath(saved.redirect, admin ? '/admin/dashboard' : '/');
-    const res = NextResponse.redirect(new URL(dest, request.url));
+    const res = NextResponse.redirect(new URL(dest, origin));
     res.cookies.delete({ name: STATE_COOKIE, path: '/api/auth/google' });
     return res;
   } catch (e) {

@@ -1,7 +1,7 @@
 import { createHash } from 'crypto';
 import { afterEach, describe, expect, it } from 'vitest';
 import { socialLinks, whatsappLink, whatsappNumbers } from '@/lib/social';
-import { googleAuthUrl, googleConfigured, googleRedirectUri, pkceChallenge } from '@/services/google';
+import { googleAuthUrl, googleConfigured, googleRedirectUri, pkceChallenge, requestOrigin } from '@/services/google';
 
 describe('whatsapp numbers', () => {
   it('parses several numbers and strips formatting', () => {
@@ -34,6 +34,20 @@ describe('google sign-in', () => {
     expect(googleConfigured()).toBe(false);
     process.env.GOOGLE_CLIENT_SECRET = 'secret';
     expect(googleConfigured()).toBe(true);
+  });
+
+  it('returns visitors to the site they started on', () => {
+    expect(googleRedirectUri('https://lake-s-side.vercel.app')).toBe('https://lake-s-side.vercel.app/api/auth/google/callback');
+    expect(googleRedirectUri('http://localhost:3100/')).toBe('http://localhost:3100/api/auth/google/callback');
+    const url = new URL(googleAuthUrl('s', 'c'.repeat(64), googleRedirectUri('https://shop.example')));
+    expect(url.searchParams.get('redirect_uri')).toBe('https://shop.example/api/auth/google/callback');
+  });
+
+  it('reads the public origin from forwarded headers', () => {
+    expect(requestOrigin(new Headers({ host: 'localhost:3100' }))).toBe('http://localhost:3100');
+    expect(requestOrigin(new Headers({ host: 'internal:3000', 'x-forwarded-host': 'lake-s-side.vercel.app', 'x-forwarded-proto': 'https' }))).toBe('https://lake-s-side.vercel.app');
+    expect(requestOrigin(new Headers({ host: 'abc.trycloudflare.com' }))).toBe('https://abc.trycloudflare.com');
+    expect(requestOrigin(new Headers({ host: 'evil.com/path' }), 'https://fallback.test')).toBe('https://fallback.test');
   });
 
   it('uses an S256 PKCE challenge', () => {

@@ -22,7 +22,7 @@ export function GoogleButton({ redirectTo = '', label = 'Continue with Google' }
 export const GOOGLE_ERRORS: Record<string, string> = {
   google_unavailable: 'Google sign-in is not set up yet. Please use your email and password.',
   google_cancelled: 'Google sign-in was cancelled.',
-  google_expired: 'That Google sign-in link expired. Please try again.',
+  google_expired: 'Google sign-in did not finish (it took too long or was started on another page). Please try again.',
   google_unverified: 'Your Google email address is not verified, so we could not sign you in.',
   account_disabled: 'This account is disabled. Please contact support.',
   google_busy: 'Too many sign-in attempts. Please wait a few minutes and try again.',

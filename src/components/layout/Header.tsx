@@ -43,6 +43,7 @@ export async function Header() {
             </div>
             <Link href="/products?sort=newest" className={navLink}>New in</Link>
             <Link href="/track" className={navLink}>Track order</Link>
+            <Link href="/visit" className={navLink}>Visit us</Link>
             <Link href="/about" className={navLink}>About</Link>
           </nav>
 

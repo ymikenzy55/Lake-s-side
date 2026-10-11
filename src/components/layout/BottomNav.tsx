@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { IconBag, IconGrid, IconHome, IconUser, IconTruck } from './Icons';
+import { IconBag, IconGrid, IconHome, IconUser, IconTruck, IconPin } from './Icons';
 import { useSession } from './SessionProvider';
 
 /** Floating pill tab bar for phones, modelled on the reference mobile app. */
@@ -16,6 +16,7 @@ export function BottomNav() {
     { href: '/', label: 'Home', icon: IconHome, match: (p: string) => p === '/', badge: 0 },
     { href: '/products', label: 'Shop', icon: IconGrid, match: (p: string) => p.startsWith('/products'), badge: 0 },
     { href: '/track', label: 'Track', icon: IconTruck, match: (p: string) => p.startsWith('/track') || p.startsWith('/receipt'), badge: 0 },
+    { href: '/visit', label: 'Visit', icon: IconPin, match: (p: string) => p.startsWith('/visit'), badge: 0 },
     { href: '/cart', label: 'Cart', icon: IconBag, match: (p: string) => p.startsWith('/cart') || p.startsWith('/checkout'), badge: cartCount },
     { href: authed ? '/account' : '/login', label: authed ? 'Account' : 'Sign in', icon: IconUser, match: (p: string) => p.startsWith('/account') || p === '/login', badge: 0 },
   ];

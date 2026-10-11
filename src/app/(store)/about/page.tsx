@@ -57,7 +57,7 @@ export default async function AboutPage() {
 
       <section id="delivery" className="mt-14 scroll-mt-8">
         <h2 className="text-[30px]">Delivery</h2>
-        <p className="mt-2 max-w-2xl text-ink-2">We deliver across Ghana. Delivery is GHS {num(s.shipping_fee, 20)}, and free on orders over GHS {num(s.free_shipping_threshold, 500)}. Accra orders usually arrive in 1 to 2 working days, other regions in 2 to 5.</p>
+        <p className="mt-2 max-w-2xl text-ink-2">We deliver across Ghana. Delivery is GHS {num(s.shipping_fee, 20)}, and free on orders over GHS {num(s.free_shipping_threshold, 500)}. Orders in and around Nkawkaw usually arrive in 1 to 2 working days, other regions in 2 to 5.</p>
       </section>
       <section id="returns" className="mt-10 scroll-mt-8">
         <h2 className="text-[30px]">Returns and exchanges</h2>

@@ -15,7 +15,7 @@ export const SETTING_DEFAULTS = {
   whatsapp: '233200000000',
   instagram: 'https://instagram.com/thelakeside',
   tiktok: '',
-  address: 'Accra, Ghana',
+  address: 'New Station, Nkawkaw, Ghana',
   shipping_fee: '20',
   free_shipping_threshold: '500',
   cod_enabled: 'true',

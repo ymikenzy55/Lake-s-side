@@ -12,7 +12,7 @@ export default async function ContactPage() {
     ['Email', s.contact_email, `mailto:${s.contact_email}`],
     ['Phone', s.contact_phone, `tel:${s.contact_phone.replace(/\s/g, '')}`],
     ['WhatsApp', s.whatsapp || 'Chat with us', s.whatsapp ? `https://wa.me/${s.whatsapp.replace(/\D/g, '')}` : null],
-    ['Visit', s.address, null],
+    ['Visit', s.address, '/visit'],
   ];
   return (
     <>

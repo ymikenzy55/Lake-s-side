@@ -39,7 +39,13 @@ const DEMO: Demo[] = [
     name: 'Find Peace By The Water Tee', cat: 't-shirts', gender: 'UNISEX', type: 'tee', price: 250, badge: 'New', featured: true,
     colors: ['Black'], sizes: TEE_SIZES, material: 'Heavyweight cotton jersey',
     desc: 'The black Lakeside tee with our full-colour back print: "The Lakeside, Find Peace By The Water" over a moonlit mountain lake, finished with "Est. 2026" and "Dream • Explore • Live". Relaxed, slightly oversized fit.',
-    photos: ['find-peace-by-the-water-tee-1.jpg', 'find-peace-by-the-water-tee-2.jpg'],
+    photos: ['find-peace-by-the-water-tee-3.jpg', 'find-peace-by-the-water-tee-1.jpg', 'find-peace-by-the-water-tee-2.jpg'],
+  },
+  {
+    name: 'Where Calm Meets Clarity Tee – Ghana Edition', cat: 't-shirts', gender: 'UNISEX', type: 'tee', price: 250, badge: 'New', featured: true,
+    colors: ['White'], sizes: TEE_SIZES, material: 'Heavyweight cotton jersey',
+    desc: 'The white Lakeside tee in red, gold and green. "Where Calm Meets Clarity, Est. 2026" in red with the gold heartbeat-and-globe line and "Dream • Explore • Live" in green on the front, and the full-colour "The Lakeside: Find Peace By The Water" sunset-lake artwork on the back. Relaxed, slightly oversized fit with raw-cut hems.',
+    photos: ['where-calm-meets-clarity-tee-ghana-edition-1.jpg', 'where-calm-meets-clarity-tee-ghana-edition-2.jpg', 'where-calm-meets-clarity-tee-ghana-edition-3.jpg'],
   },
 ];
 
@@ -135,7 +141,7 @@ async function main() {
     const rows = d.colors.flatMap((c) =>
       d.sizes.map((sz) => ({
         productId: product.id, sizeId: sizes.get(sz)!, colorId: colors.get(c)!,
-        sku: `${s.slice(0, 6).toUpperCase()}-${sz}-${c.replace(/\s/g, '').slice(0, 3).toUpperCase()}`,
+        sku: `${s.split('-').map((w) => w[0]).join('').toUpperCase()}-${sz}-${c.replace(/\s/g, '').slice(0, 3).toUpperCase()}`,
         price: d.price, comparePrice: d.was ?? null,
       }))
     );

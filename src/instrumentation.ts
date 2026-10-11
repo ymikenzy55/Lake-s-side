@@ -1,9 +1,9 @@
 /**
- * Runs once when the Node server boots. The database is remote, and a cold connection costs
- * 0.5-1s, so open a few pooled connections up front and keep the Neon compute from idling out.
+ * Keep the remote database pool warm on persistent Node servers. Vercel functions are short-lived
+ * and do not share a process, so background warm-up timers there only add database traffic.
  */
 export async function register() {
-  if (process.env.NEXT_RUNTIME !== 'nodejs') return;
+  if (process.env.NEXT_RUNTIME !== 'nodejs' || process.env.VERCEL === '1') return;
   const { prisma } = await import('@/lib/db');
   const ping = () => prisma.$queryRaw`SELECT 1`.catch(() => undefined);
   void Promise.all([ping(), ping(), ping(), ping()]); // warm the pool

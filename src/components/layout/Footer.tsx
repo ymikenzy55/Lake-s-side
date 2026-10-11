@@ -26,6 +26,7 @@ export async function Footer() {
           <p className={h}>Help</p>
           <Link href="/track">Track your order</Link>
           <Link href="/contact">Contact us</Link>
+          <Link href="/visit">Visit our store</Link>
           <Link href="/about#delivery">Delivery</Link>
           <Link href="/about#returns">Returns</Link>
           <Link href="/about#size-guide">Size guide</Link>
@@ -37,7 +38,7 @@ export async function Footer() {
           {s.whatsapp && <a href={`https://wa.me/${s.whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer">WhatsApp</a>}
           {s.instagram && <a href={s.instagram} target="_blank" rel="noopener noreferrer">Instagram</a>}
           {s.tiktok && <a href={s.tiktok} target="_blank" rel="noopener noreferrer">TikTok</a>}
-          <span>{s.address}</span>
+          <Link href="/visit">{s.address}</Link>
         </div>
       </div>
       <div className="container-x mt-10 flex flex-col gap-1 border-t border-line pt-5 text-[12px] text-muted md:flex-row md:justify-between">

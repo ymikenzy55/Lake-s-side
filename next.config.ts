@@ -10,6 +10,7 @@ const csp = [
   "img-src 'self' data: blob: https://res.cloudinary.com https://www.google-analytics.com https://www.facebook.com",
   "font-src 'self' data:",
   "connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://www.facebook.com https://connect.facebook.net",
+  "frame-src https://www.google.com https://maps.google.com",
   "frame-ancestors 'none'",
   "form-action 'self'",
   "base-uri 'self'",
@@ -38,6 +39,8 @@ const nextConfig: NextConfig = {
       { source: '/account/orders', destination: '/account', permanent: false },
       { source: '/shop', destination: '/products', permanent: false },
       { source: '/admin', destination: '/admin/dashboard', permanent: false },
+      { source: '/location', destination: '/visit', permanent: false },
+      { source: '/find-us', destination: '/visit', permanent: false },
     ];
   },
   async headers() {

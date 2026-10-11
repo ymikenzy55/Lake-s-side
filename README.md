@@ -54,7 +54,7 @@ For implementation details and key design decisions, see [Architecture](docs/ARC
 
 ### Prerequisites
 
-- Node.js 20.9 or newer
+- Node.js 22.x
 - npm
 - A PostgreSQL database
 

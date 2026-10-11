@@ -42,7 +42,7 @@ export async function uploadImage(
     }
 
     const result = await cloudinary.uploader.upload(uploadSource, {
-      folder: `comfortfit/${folder}`,
+      folder: `thelakeside/${folder}`,
       transformation: [
         { quality: 'auto', fetch_format: 'auto' },
         { width: 1200, height: 1600, crop: 'limit' },

@@ -65,8 +65,8 @@
 ### Environment Variables
 ```env
 BREVO_API_KEY=xkeysib-xxxxx
-BREVO_SENDER_EMAIL=noreply@splendor.example.com
-BREVO_SENDER_NAME=Splendor & Silk
+BREVO_SENDER_EMAIL=noreply@thelakeside.shop
+BREVO_SENDER_NAME=The Lakeside
 ```
 
 ### Brevo Service
@@ -151,7 +151,7 @@ export function getPasswordResetTemplate(resetUrl: string) {
     htmlContent: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h1>Password Reset</h1>
-        <p>You requested a password reset for your Splendor & Silk account.</p>
+        <p>You requested a password reset for your The Lakeside account.</p>
         <p>Click the link below to reset your password:</p>
         <a href="${resetUrl}" style="background: #d87b8b; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px;">Reset Password</a>
         <p>This link will expire in 1 hour.</p>

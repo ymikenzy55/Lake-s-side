@@ -2,6 +2,7 @@ import { prisma } from '@/lib/db';
 import { BRAND } from '@/lib/config/brand';
 import type { NotificationType } from '@prisma/client';
 import nodemailer from 'nodemailer';
+import { APP_URL } from '@/lib/constants';
 
 interface SendArgs {
   type: NotificationType;
@@ -44,7 +45,7 @@ export function emailLayout(title: string, bodyHtml: string): string {
   return `<!doctype html><html><body style="margin:0;background:#f4f4f5;font-family:Helvetica,Arial,sans-serif;color:#0b1220">
 <table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:24px 12px">
 <table width="560" cellpadding="0" cellspacing="0" style="max-width:560px;background:#fff;border-radius:20px;overflow:hidden">
-<tr><td style="background:#0b1220;color:#fff;padding:20px 28px;font-weight:800;letter-spacing:.04em">COMFORT<span style="color:#9fb4e8">_</span>FIT <span style="font-size:11px;opacity:.7">GH</span></td></tr>
+<tr><td align="center" style="background:#000;padding:18px 28px"><img src="${esc(APP_URL)}/brand/lakeside-logo.png" width="180" alt="${esc(BRAND.name)}" style="display:block;width:180px;max-width:100%;height:auto;border:0;color:#fff;font-weight:800;letter-spacing:.04em"></td></tr>
 <tr><td style="padding:28px"><h1 style="margin:0 0 14px;font-size:22px">${esc(title)}</h1>${bodyHtml}</td></tr>
 <tr><td style="padding:16px 28px;background:#fafafa;color:#6b6b70;font-size:12px">${esc(BRAND.name)} · ${esc(BRAND.tagline)}</td></tr>
 </table></td></tr></table></body></html>`;
@@ -103,7 +104,7 @@ export async function sendEmail({ type, to, subject, html, devLink }: SendArgs):
       headers: { 'api-key': key, 'content-type': 'application/json', accept: 'application/json' },
       body: JSON.stringify({
         sender: {
-          email: process.env.BREVO_SENDER_EMAIL || 'noreply@comfortfit.gh',
+          email: process.env.BREVO_SENDER_EMAIL || 'noreply@thelakeside.shop',
           name: process.env.BREVO_SENDER_NAME || BRAND.name,
         },
         to: [{ email: to }],

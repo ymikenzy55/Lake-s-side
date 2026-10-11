@@ -62,7 +62,7 @@ export function TrackClient({ initialOrder }: { initialOrder: string }) {
       >
         <div>
           <label className="label" htmlFor="order">Tracking ID</label>
-          <input id="order" name="order" required defaultValue={initialOrder} placeholder="CF-261010-K7M2" className="field font-mono uppercase" autoComplete="off" />
+          <input id="order" name="order" required defaultValue={initialOrder} placeholder="LS-261010-K7M2" className="field font-mono uppercase" autoComplete="off" />
         </div>
         <div>
           <label className="label" htmlFor="email">Email used at checkout</label>

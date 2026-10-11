@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Logo } from '@/components/brand/Logo';
+import { Logo, LogoFull } from '@/components/brand/Logo';
 import { getSettings } from '@/domains/settings/service';
 
 export async function Footer() {
@@ -10,8 +10,9 @@ export async function Footer() {
     <footer className="mt-16 border-t border-line pb-28 pt-12 print:hidden md:pb-10">
       <div className="container-x grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
-          <Logo />
-          <p className="mt-4 max-w-xs text-[13px] leading-relaxed text-muted">{s.tagline} Premium everyday wear, designed in Ghana for every size, colour and fit.</p>
+          <div className="md:hidden"><Logo /></div>
+          <LogoFull width={200} className="hidden rounded-2xl md:block" />
+          <p className="mt-4 max-w-xs text-[13px] leading-relaxed text-muted">{s.tagline} Premium everyday wear made to slow down in, in every size, colour and fit.</p>
         </div>
         <div className={col}>
           <p className={h}>Shop</p>

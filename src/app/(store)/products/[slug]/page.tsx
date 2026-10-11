@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!product || !product.isActive) return { title: 'Product not found' };
   return {
     title: product.name,
-    description: product.description?.slice(0, 160) || `Buy ${product.name} from Comfort_fit GH`,
+    description: product.description?.slice(0, 160) || `Buy ${product.name} from The Lakeside`,
   };
 }
 

@@ -1,4 +1,4 @@
-# Production image (untested on this machine; build with: docker build -t comfortfit .)
+# Production image (untested on this machine; build with: docker build -t thelakeside .)
 FROM node:22-alpine AS deps
 WORKDIR /app
 COPY package*.json ./

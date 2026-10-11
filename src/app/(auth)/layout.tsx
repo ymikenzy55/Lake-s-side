@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Logo } from '@/components/brand/Logo';
+import { Logo, LogoFull } from '@/components/brand/Logo';
 import Image from 'next/image';
 import { BackButton } from '@/components/layout/BackButton';
 
@@ -13,9 +13,11 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         </div>
         <div className="mx-auto flex w-full max-w-[420px] flex-1 flex-col justify-center py-10">{children}</div>
       </div>
-      <div className="relative hidden overflow-hidden bg-surface lg:block">
-        <Image src="/photos/cloud-crew-sweatshirt-1.jpg" alt="Model in a Comfort_fit sweatshirt" fill priority sizes="50vw" className="object-cover" />
-        <p className="absolute left-10 top-10 text-[88px] font-medium leading-[0.86] tracking-[-0.06em] text-white drop-shadow-[0_6px_24px_rgba(0,0,0,.35)]">Wear the<br />comfort.</p>
+      <div className="relative hidden overflow-hidden bg-black lg:block">
+        <Image src="/photos/lakeside-crew.jpg" alt="Four people wearing The Lakeside tees" fill priority sizes="50vw" className="object-cover opacity-55" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/30 to-black/80" />
+        <p className="absolute left-10 top-10 text-[88px] font-medium leading-[0.86] tracking-[-0.06em] text-white drop-shadow-[0_6px_24px_rgba(0,0,0,.35)]">Calm<br />meets<br /><span className="text-lake-soft">clarity.</span></p>
+        <div className="absolute bottom-10 left-10"><LogoFull width={260} className="rounded-2xl" /></div>
       </div>
     </div>
   );

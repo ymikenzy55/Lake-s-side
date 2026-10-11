@@ -1,6 +1,6 @@
 # Architecture
 
-Comfort_fit GH uses the Next.js App Router for its storefront, administrative interface, and server-side application logic. React Server Components handle data-backed pages; Server Actions and Route Handlers handle mutations and HTTP integrations. Prisma provides typed PostgreSQL access.
+The Lakeside uses the Next.js App Router for its storefront, administrative interface, and server-side application logic. React Server Components handle data-backed pages; Server Actions and Route Handlers handle mutations and HTTP integrations. Prisma provides typed PostgreSQL access.
 
 ## Project structure
 

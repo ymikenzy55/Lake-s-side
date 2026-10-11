@@ -23,13 +23,13 @@ export default async function AboutPage() {
     <div className="container-x max-w-4xl pt-10 md:pt-12">
       <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'About' }]} />
       <p className="eyebrow mt-6">Philosophy</p>
-      <h1 className="mt-2 text-[32px] md:text-[48px]">Comfort is not a compromise.</h1>
+      <h1 className="mt-2 text-[32px] md:text-[48px]">Where calm meets clarity.</h1>
       <p className="mt-6 max-w-2xl text-[18px] leading-relaxed text-ink-2">
-        {BRAND.name} began with a simple frustration: clothes that look good but feel wrong, or feel good but look careless. We design everyday pieces in generous size ranges, with soft honest fabrics, built for the heat, the hustle and the weekend.
+        {BRAND.name} began at the water&apos;s edge, with a simple idea: clothes should feel as calm as a still lake and look as clear as the morning after. We design everyday pieces in generous size ranges, with soft honest fabrics, built for the heat, the hustle and the slow weekend.
       </p>
 
       <div className="mt-14 grid gap-4 md:grid-cols-3">
-        {[['Every body', 'XS to XXL across most styles, with fits for men, women and kids.'], ['Honest fabric', 'Heavy cotton, breathable blends and finishes that last past the tenth wash.'], ['Made for Ghana', 'Colours and cuts chosen for how we actually live, dress and move.']].map(([t, d]) => (
+        {[['Every body', 'XS to XXL across most styles, with fits for men, women and kids.'], ['Honest fabric', 'Heavy cotton, breathable blends and finishes that last past the tenth wash.'], ['Calm and clear', 'Quiet colours and clean cuts chosen for how we actually live, dress and unwind.']].map(([t, d]) => (
           <div key={t} className="card-soft p-6"><h2 className="text-[22px]">{t}</h2><p className="mt-2 text-[14px] text-muted">{d}</p></div>
         ))}
       </div>
@@ -48,7 +48,7 @@ export default async function AboutPage() {
       <section id="business" className="mt-14 scroll-mt-24 rounded-[18px] bg-surface p-6 md:p-9">
         <p className="eyebrow">Business</p>
         <h2 className="mt-2 text-[30px]">Wholesale and bulk orders</h2>
-        <p className="mt-2 max-w-2xl text-ink-2">Outfitting a team, a shop, a school or an event? We supply Comfort_fit pieces in bulk with trade pricing and optional custom branding (embroidery or print). Tell us what you need and we will send a quote within one working day.</p>
+        <p className="mt-2 max-w-2xl text-ink-2">Outfitting a team, a shop, a school or an event? We supply Lakeside pieces in bulk with trade pricing and optional custom branding (embroidery or print). Tell us what you need and we will send a quote within one working day.</p>
         <div className="mt-5 flex flex-wrap gap-2">
           <a className="btn btn-primary" href={`mailto:${s.contact_email}?subject=Bulk%20order%20enquiry`}>Email us</a>
           {s.whatsapp && <a className="btn btn-ghost" target="_blank" rel="noopener noreferrer" href={`https://wa.me/${s.whatsapp.replace(/\D/g, '')}?text=Hello%2C%20I%20would%20like%20a%20bulk%20order%20quote`}>WhatsApp us</a>}

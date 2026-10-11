@@ -1,9 +1,11 @@
 export const BRAND = {
-  name: 'Comfort_fit GH',
-  short: 'Comfort_fit',
-  tagline: 'Wear the comfort. Own the day.',
+  name: 'The Lakeside',
+  short: 'Lakeside',
+  tagline: 'Where calm meets clarity.',
   description:
-    'Comfort_fit GH is a Ghana-born clothing brand: premium everyday wear in every size, colour and fit.',
+    'The Lakeside is a calm, considered clothing brand: premium everyday wear in every size, colour and fit, made to slow down in.',
+  logo: '/brand/lakeside-logo.png',
+  mark: '/brand/lakeside-icon-512.png',
 } as const;
 
 export const SOCIALS = [

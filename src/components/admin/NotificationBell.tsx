@@ -14,7 +14,7 @@ interface Data {
   low: { id: string; name: string; left: number }[];
 }
 
-export const ADMIN_EVENT = 'cf-admin-event';
+export const ADMIN_EVENT = 'lakeside-admin-event';
 
 const ago = (iso: string) => {
   const m = Math.max(0, Math.round((Date.now() - new Date(iso).getTime()) / 60000));
@@ -38,11 +38,12 @@ export function NotificationBell({ align = 'right' }: { align?: 'left' | 'right'
   }, []);
 
   useEffect(() => {
-    void load();
+    const first = window.setTimeout(() => void load(), 0);
     const onEvent = () => void load();
     window.addEventListener(ADMIN_EVENT, onEvent);
     const t = window.setInterval(() => document.visibilityState === 'visible' && void load(), 60_000);
     return () => {
+      window.clearTimeout(first);
       window.removeEventListener(ADMIN_EVENT, onEvent);
       window.clearInterval(t);
     };

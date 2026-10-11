@@ -8,7 +8,7 @@ export function ShopSearchBar({ defaultValue, hidden = {} }: { defaultValue?: st
         <div className="flex items-center gap-3 sm:gap-5">
           <p className="hidden shrink-0 text-[15px] font-bold sm:block md:text-[17px]">Give All You Need</p>
           <div className="min-w-0 flex-1 rounded-full border border-line bg-white py-0 pl-4 pr-1 sm:ml-auto sm:max-w-[440px]">
-            <SearchBox defaultValue={defaultValue} hidden={hidden} placeholder="Search on Comfort_fit" button="Search" />
+            <SearchBox defaultValue={defaultValue} hidden={hidden} placeholder="Search The Lakeside" button="Search" />
           </div>
         </div>
       </div>

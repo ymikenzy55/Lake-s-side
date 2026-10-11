@@ -31,12 +31,12 @@ describe('realtime bus', () => {
     const adminSeen = vi.fn();
     const orderSeen = vi.fn();
     const offA = subscribe(adminChannel, adminSeen);
-    const offO = subscribe(orderChannel('CF-1'), orderSeen);
-    const evt = { type: 'order.updated' as const, orderNumber: 'CF-1', status: 'PROCESSING', paymentStatus: 'PENDING', at: 1 };
+    const offO = subscribe(orderChannel('LS-1'), orderSeen);
+    const evt = { type: 'order.updated' as const, orderNumber: 'LS-1', status: 'PROCESSING', paymentStatus: 'PENDING', at: 1 };
     publish(adminChannel, evt);
     expect(adminSeen).toHaveBeenCalledTimes(1);
     expect(orderSeen).not.toHaveBeenCalled();
-    publish(orderChannel('CF-1'), evt);
+    publish(orderChannel('LS-1'), evt);
     expect(orderSeen).toHaveBeenCalledTimes(1);
     offA();
     publish(adminChannel, evt);

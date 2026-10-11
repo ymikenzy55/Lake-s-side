@@ -836,7 +836,7 @@ function checkRateLimit(identifier: string, maxRequests: number, windowMs: numbe
 ### Production
 ```typescript
 {
-  origin: ['https://splendor.example.com'],
+  origin: ['https://thelakeside.example.com'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true

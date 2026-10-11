@@ -20,6 +20,12 @@ const nextConfig: NextConfig = {
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,
+  experimental: {
+    // The dev MCP server appends every page view to .next/dev/logs/next-development.log. On Windows,
+    // Turbopack's watcher picks that write up as a change, rebuilds and reloads the page, which writes
+    // the log again: an endless reload loop. Nothing in this project uses the MCP endpoint.
+    mcpServer: false,
+  },
   images: {
     // WebP only: AVIF is slower to encode on first request and gains little for these photos
     formats: ['image/webp'],

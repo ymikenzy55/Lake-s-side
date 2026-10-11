@@ -41,7 +41,7 @@ function templateDescription(d: DescribeInput): string {
 }
 
 const SYSTEM =
-  'You write product details for Comfort_fit GH, an online shop in Ghana that mainly sells clothing but can sell any product. Use a warm, clear, honest tone. Use only what the name and the given facts support; never invent specific materials, features, prices or claims you cannot reasonably infer. Plain text, no markdown, no emojis.';
+  'You write product details for The Lakeside (tagline: "Where calm meets clarity."), an online shop in Ghana that mainly sells calm, considered clothing but can sell any product. Use a warm, clear, honest tone. Use only what the name and the given facts support; never invent specific materials, features, prices or claims you cannot reasonably infer. Plain text, no markdown, no emojis.';
 
 async function callClaude(user: string, maxTokens: number): Promise<string | null> {
   const key = process.env.ANTHROPIC_API_KEY;

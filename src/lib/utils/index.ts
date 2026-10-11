@@ -2,13 +2,13 @@
 
 const ID_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // no 0/O/1/I to avoid mix-ups on the phone
 
-/** Friendly, trackable order number: CF-YYMMDD-XXXX (e.g. CF-261010-K7M2). */
+/** Friendly, trackable order number: LS-YYMMDD-XXXX (e.g. LS-261010-K7M2). */
 export function generateOrderNumber(): string {
   const d = new Date();
   const ymd = `${String(d.getFullYear()).slice(2)}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`;
   const bytes = crypto.getRandomValues(new Uint8Array(4));
   const rand = Array.from(bytes, (b) => ID_ALPHABET[b % ID_ALPHABET.length]).join('');
-  return `CF-${ymd}-${rand}`;
+  return `LS-${ymd}-${rand}`;
 }
 
 export function formatCurrency(amount: number | string): string {

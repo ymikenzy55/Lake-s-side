@@ -41,10 +41,10 @@ describe('tokens', () => {
     expect(sha256('abc')).not.toContain('abc');
   });
   it('signs and verifies values, rejecting tampering', () => {
-    const signed = sign('CF-123');
-    expect(unsign(signed)).toBe('CF-123');
-    expect(unsign(signed.replace('CF-123', 'CF-999'))).toBeNull();
-    expect(unsign('CF-123.deadbeef')).toBeNull();
+    const signed = sign('LS-123');
+    expect(unsign(signed)).toBe('LS-123');
+    expect(unsign(signed.replace('LS-123', 'LS-999'))).toBeNull();
+    expect(unsign('LS-123.deadbeef')).toBeNull();
     expect(unsign(undefined)).toBeNull();
   });
 });

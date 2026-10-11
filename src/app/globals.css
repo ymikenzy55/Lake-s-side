@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* ───────── Design tokens: clean retail look (light grey tiles, black pills, compact type) ───────── */
+/* ───────── Design tokens: clean retail look (light grey tiles, black pills, compact type) + lake blue from the logo ───────── */
 :root {
   --bg: #ffffff;
   --surface: #f2f4f8;
@@ -11,7 +11,9 @@
   --line: #e2e7ef;
   --accent: #ffffff;
   --badge-orange: #0b1220;
-  --badge-green: #dbe3f3;
+  --badge-green: #dcecfc;
+  --lake: #1f7fe0;
+  --lake-soft: #8cc4ff;
   --danger: #d92d20;
   --ok: #12805c;
   --radius-card: 16px;
@@ -30,6 +32,8 @@
   --color-accent: var(--accent);
   --color-danger: var(--danger);
   --color-ok: var(--ok);
+  --color-lake: var(--lake);
+  --color-lake-soft: var(--lake-soft);
   --font-sans: var(--font-inter), "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 

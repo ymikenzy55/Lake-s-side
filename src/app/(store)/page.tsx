@@ -26,7 +26,7 @@ export default async function HomePage() {
     { icon: IconTruck, title: 'Fast delivery', text: `Free over GHS ${num(settings.free_shipping_threshold, 500)}` },
     { icon: IconShield, title: 'Secure checkout', text: 'MoMo, cards or cash' },
     { icon: IconReturn, title: 'Easy returns', text: '7-day exchanges' },
-    { icon: IconSpark, title: 'Premium comfort', text: 'Soft, durable fabrics' },
+    { icon: IconSpark, title: 'Calm by design', text: 'Soft, durable fabrics' },
   ];
 
   return (
@@ -62,13 +62,13 @@ export default async function HomePage() {
         <Reveal>
           <div className="relative grid overflow-hidden rounded-[20px] bg-surface md:grid-cols-2">
             <div className="flex flex-col justify-center p-7 md:p-12">
-              <p className="eyebrow">Season drop</p>
-              <h2 className="mt-3 max-w-md text-[28px] font-semibold leading-[1.05] md:text-[40px]">Comfort that moves with you.</h2>
-              <p className="mt-3 max-w-sm text-[14px] text-muted">Heavyweight cotton, relaxed cuts and colours you will live in, in sizes XS to XXL.</p>
-              <Link href="/products?sort=newest" className="btn btn-primary mt-6 w-fit">Shop new arrivals <IconArrow /></Link>
+              <p className="eyebrow">The Lakeside drop</p>
+              <h2 className="mt-3 max-w-md text-[28px] font-semibold leading-[1.05] md:text-[40px]">Where calm meets clarity.</h2>
+              <p className="mt-3 max-w-sm text-[14px] text-muted">Our first tees: Where Calm Meets Clarity in white and Find Peace By The Water in black. Heavyweight cotton, relaxed fit, sizes S to XXL.</p>
+              <Link href="/products?category=t-shirts" className="btn btn-primary mt-6 w-fit">Shop the tees <IconArrow /></Link>
             </div>
             <div className="relative min-h-[260px] md:min-h-[360px]">
-              <Image src="/photos/everyday-heavy-hoodie-2.jpg" alt="Model wearing the Everyday Heavy Hoodie" fill sizes="(max-width:768px) 100vw, 50vw" className="object-cover object-top" />
+              <Image src="/photos/lakeside-couple.jpg" alt="Two people wearing the white Where Calm Meets Clarity Tee" fill sizes="(max-width:768px) 100vw, 50vw" className="object-cover object-top" />
             </div>
           </div>
         </Reveal>

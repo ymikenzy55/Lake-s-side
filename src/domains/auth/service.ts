@@ -86,7 +86,7 @@ export class AuthService {
     await sendEmail({
       type: 'PASSWORD_RESET',
       to: user.email,
-      subject: 'Reset your Comfort_fit GH password',
+      subject: 'Reset your The Lakeside password',
       devLink: link,
       html: emailLayout(
         'Reset your password',

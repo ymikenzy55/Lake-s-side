@@ -15,7 +15,7 @@ export interface SlideForm {
 
 const BLANK: SlideForm = {
   line1: 'Autumn', line2: 'Winter', line3: '2026', line4: 'Collection',
-  tagline: 'Comfort that moves with you.', subtitle: 'Soft layers made for the everyday.',
+  tagline: 'Where calm meets clarity.', subtitle: 'Soft layers made for slow days by the water.',
   ctaLabel: 'View the Collection', ctaHref: '/products', garment: 'hoodie',
   garmentColor: '#d9dce3', bgFrom: '#1b2540', bgTo: '#0b1220', imageUrl: '', displayOrder: '0', isActive: true,
 };

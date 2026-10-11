@@ -1,8 +1,10 @@
-# Comfort_fit GH
+# The Lakeside
 
-**A mobile-first fashion storefront with a secure customer shopping journey and a responsive store-management dashboard.**
+**A calm, mobile-first fashion storefront — "Where calm meets clarity." — with a secure customer shopping journey and a responsive store-management dashboard.**
 
-Comfort_fit GH is a full-stack e-commerce application for browsing clothing, managing a cart, placing and tracking orders, and administering a product catalogue. It is built with Next.js, TypeScript, Prisma, and PostgreSQL, with a domain-oriented structure that keeps business logic, user interfaces, and external integrations separate.
+![The Lakeside](public/brand/lakeside-logo.png)
+
+The Lakeside is a full-stack e-commerce application for browsing clothing, managing a cart, placing and tracking orders, and administering a product catalogue. It is built with Next.js, TypeScript, Prisma, and PostgreSQL, with a domain-oriented structure that keeps business logic, user interfaces, and external integrations separate.
 
 ## Highlights
 

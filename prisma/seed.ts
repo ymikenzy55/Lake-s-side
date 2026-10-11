@@ -24,21 +24,23 @@ const CATEGORIES = [
 interface Demo {
   name: string; cat: string; gender: Gender; type: string; price: number; was?: number; badge?: string; featured?: boolean;
   colors: string[]; sizes: string[]; material: string; desc: string;
+  /** Photos in public/photos, first is the primary image. */
+  photos: string[];
 }
-const ALL = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+const TEE_SIZES = ['S', 'M', 'L', 'XL', 'XXL'];
 const DEMO: Demo[] = [
-  { name: 'Everyday Heavy Hoodie', cat: 'hoodies', gender: 'UNISEX', type: 'hoodie', price: 320, was: 380, badge: 'Best seller', featured: true, colors: ['Charcoal', 'Black', 'Sand', 'Forest'], sizes: ALL, material: '400gsm brushed cotton fleece', desc: 'Our signature oversized hoodie in heavyweight fleece. Soft inside, structured outside, built for harmattan mornings and cold AC.' },
-  { name: 'Cloud Crew Sweatshirt', cat: 'hoodies', gender: 'UNISEX', type: 'hoodie', price: 260, colors: ['Cream', 'Sky', 'Navy'], sizes: ALL, material: '320gsm cotton terry', desc: 'A relaxed crew sweatshirt with dropped shoulders and a ribbed hem that holds its shape.' },
-  { name: 'Classic Boxy Tee', cat: 't-shirts', gender: 'UNISEX', type: 'tee', price: 120, featured: true, colors: ['White', 'Black', 'Olive', 'Brick Red'], sizes: ALL, material: '220gsm combed cotton', desc: 'The tee you will reach for every day. Boxy fit, double-stitched collar, zero cling.' },
-  { name: 'Soft Touch Slim Tee', cat: 't-shirts', gender: 'MEN', type: 'tee', price: 95, was: 120, colors: ['Navy', 'Sky', 'Charcoal'], sizes: ['S', 'M', 'L', 'XL', 'XXL'], material: '180gsm cotton jersey', desc: 'A lighter, slimmer cut for hot days and layering.' },
-  { name: 'Pique Polo', cat: 'polos', gender: 'MEN', type: 'polo', price: 180, badge: 'New', colors: ['White', 'Navy', 'Forest'], sizes: ['S', 'M', 'L', 'XL', 'XXL'], material: 'Cotton pique', desc: 'Smart enough for the office, comfortable enough for the weekend.' },
-  { name: 'Weekend Joggers', cat: 'trousers', gender: 'UNISEX', type: 'trousers', price: 240, featured: true, colors: ['Charcoal', 'Black', 'Olive'], sizes: ALL, material: 'Cotton-poly fleece', desc: 'Tapered joggers with a drawcord waist, zip pockets and a soft brushed lining.' },
-  { name: 'Relaxed Chinos', cat: 'trousers', gender: 'MEN', type: 'trousers', price: 280, colors: ['Sand', 'Navy', 'Olive'], sizes: ['S', 'M', 'L', 'XL', 'XXL'], material: 'Stretch cotton twill', desc: 'Easy straight-leg chinos with stretch for all-day sitting and moving.' },
-  { name: 'Lounge Shorts', cat: 'shorts', gender: 'UNISEX', type: 'shorts', price: 140, colors: ['Black', 'Sky', 'Cream'], sizes: ALL, material: 'Cotton terry', desc: 'Knee-length lounge shorts with a deep waistband.' },
-  { name: 'Sunday Midi Dress', cat: 'dresses', gender: 'WOMEN', type: 'dress', price: 310, was: 360, badge: 'Limited', featured: true, colors: ['Brick Red', 'Cream', 'Forest'], sizes: ['XS', 'S', 'M', 'L', 'XL'], material: 'Soft viscose blend', desc: 'A flowing A-line midi with short sleeves that moves with you.' },
-  { name: 'Pleated Skirt', cat: 'dresses', gender: 'WOMEN', type: 'skirt', price: 190, colors: ['Black', 'Sand', 'Navy'], sizes: ['XS', 'S', 'M', 'L', 'XL'], material: 'Crease-resistant poly crepe', desc: 'Knife pleats that stay sharp from morning to night.' },
-  { name: 'Comfort Dad Cap', cat: 'caps', gender: 'UNISEX', type: 'cap', price: 85, colors: ['Black', 'Sand', 'Navy', 'Brick Red'], sizes: ['M'], material: 'Washed cotton twill', desc: 'A soft, unstructured six-panel cap with an adjustable strap.' },
-  { name: 'Studio Zip Hoodie', cat: 'hoodies', gender: 'WOMEN', type: 'hoodie', price: 340, badge: 'New', colors: ['Sky', 'Cream', 'Charcoal'], sizes: ['XS', 'S', 'M', 'L', 'XL'], material: '360gsm cotton fleece', desc: 'A cropped-length zip hoodie with a clean, fitted shape.' },
+  {
+    name: 'Where Calm Meets Clarity Tee', cat: 't-shirts', gender: 'UNISEX', type: 'tee', price: 250, badge: 'New', featured: true,
+    colors: ['White'], sizes: TEE_SIZES, material: 'Heavyweight cotton jersey',
+    desc: 'Our signature white tee. "Where Calm Meets Clarity, Est. 2026" with the heartbeat-and-globe line and "Dream • Explore • Live" on the front, and the full "The Lakeside: Find Peace By The Water" mountain-lake artwork on the back. Relaxed, slightly oversized fit.',
+    photos: ['where-calm-meets-clarity-tee-1.jpg', 'where-calm-meets-clarity-tee-2.jpg', 'where-calm-meets-clarity-tee-3.jpg', 'where-calm-meets-clarity-tee-4.jpg'],
+  },
+  {
+    name: 'Find Peace By The Water Tee', cat: 't-shirts', gender: 'UNISEX', type: 'tee', price: 250, badge: 'New', featured: true,
+    colors: ['Black'], sizes: TEE_SIZES, material: 'Heavyweight cotton jersey',
+    desc: 'The black Lakeside tee with our full-colour back print: "The Lakeside, Find Peace By The Water" over a moonlit mountain lake, finished with "Est. 2026" and "Dream • Explore • Live". Relaxed, slightly oversized fit.',
+    photos: ['find-peace-by-the-water-tee-1.jpg', 'find-peace-by-the-water-tee-2.jpg'],
+  },
 ];
 
 const slug = (s: string) => s.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
@@ -61,7 +63,7 @@ async function main() {
   }
 
   // Retire placeholder admin accounts from earlier setups (never the configured super admin).
-  for (const old of ['admin@splendor.com', 'admin@comfortfit.gh']) {
+  for (const old of ['admin@splendor.com', 'admin@comfortfit.gh', 'admin@thelakeside.shop']) {
     if (old === email) continue;
     const u = await prisma.user.findUnique({ where: { email: old } });
     if (u && (u.isActive || u.role !== 'CUSTOMER')) {
@@ -74,9 +76,8 @@ async function main() {
   /* ── reference data ── */
   await prisma.category.updateMany({ where: { slug: 'dresses' }, data: { name: 'Dresses & Skirts' } });
   for (const [i, [name, s]] of CATEGORIES.entries()) {
-    await prisma.category.upsert({ where: { slug: s }, update: {}, create: { name, slug: s, displayOrder: i + 1, description: `${name} by Comfort_fit GH` } });
+    await prisma.category.upsert({ where: { slug: s }, update: {}, create: { name, slug: s, displayOrder: i + 1, description: `${name} by The Lakeside` } });
   }
-  await prisma.category.updateMany({ where: { slug: { in: ['tops', 'bottoms', 'accessories'] }, products: { none: {} } }, data: { isActive: false } });
 
   for (const [i, [name, displayName]] of SIZES.entries()) {
     await prisma.size.upsert({ where: { name }, update: { sortOrder: i + 1 }, create: { name, displayName, sortOrder: i + 1 } });
@@ -86,7 +87,7 @@ async function main() {
   }
 
   const settings: Record<string, string> = {
-    store_name: 'Comfort_fit GH', shipping_fee: '20', free_shipping_threshold: '500', hero_autoplay_ms: '4000',
+    store_name: 'The Lakeside', shipping_fee: '20', free_shipping_threshold: '500', hero_autoplay_ms: '4000',
   };
   for (const [key, value] of Object.entries(settings)) {
     await prisma.systemSetting.upsert({ where: { key }, update: {}, create: { key, value } });
@@ -101,8 +102,8 @@ async function main() {
   if ((await prisma.heroSlide.count()) === 0) {
     await prisma.heroSlide.createMany({
       data: [
-        { line1: 'Shop', line2: 'New season', line3: '2026', line4: null, tagline: 'The Future Wears Comfort.', subtitle: 'Step into a world where softness meets strength.', garment: 'hoodie', garmentColor: '#d9dce3', bgFrom: '#1b2540', bgTo: '#0b1220', ctaLabel: 'Shop the collection', ctaHref: '/products', imageUrl: '/photos/banner-shop.jpg', displayOrder: 0 },
-        { line1: 'Wholesale', line2: 'For business', line3: null, line4: null, tagline: 'Bulk orders and custom branding for your business.', subtitle: 'Outfit your team, shop or event with premium comfort wear at trade prices.', garment: 'hoodie', garmentColor: '#3a3d45', bgFrom: '#1b2540', bgTo: '#0b1220', ctaLabel: 'Request a bulk order', ctaHref: '/about#business', imageUrl: '/photos/banner-rack.jpg', displayOrder: 1 },
+        { line1: 'Shop', line2: 'New season', line3: '2026', line4: null, tagline: 'Where calm meets clarity.', subtitle: 'Soft, considered layers for slow mornings and clear evenings by the water.', garment: 'tee', garmentColor: '#f6f6f4', bgFrom: '#1b2540', bgTo: '#0b1220', ctaLabel: 'Shop the collection', ctaHref: '/products', imageUrl: '/photos/banner-shop.jpg', displayOrder: 0 },
+        { line1: 'Wholesale', line2: 'For business', line3: null, line4: null, tagline: 'Bulk orders and custom branding for your business.', subtitle: 'Outfit your team, shop or event with premium Lakeside wear at trade prices.', garment: 'tee', garmentColor: '#16161a', bgFrom: '#1b2540', bgTo: '#0b1220', ctaLabel: 'Request a bulk order', ctaHref: '/about#business', imageUrl: '/photos/banner-rack.jpg', displayOrder: 1 },
       ],
     });
   }
@@ -128,7 +129,7 @@ async function main() {
         name: d.name, slug: s, description: d.desc, categoryId: cats.get(d.cat)!, gender: d.gender, garmentType: d.type,
         material: d.material, careInfo: 'Machine wash cold, inside out. Do not bleach.', badge: d.badge ?? null,
         featured: d.featured ?? false, minPrice: d.price, tags: [d.type, d.cat, d.gender.toLowerCase()],
-        images: { create: ['front', 'back', 'detail', 'studio'].map((v, i) => ({ imageUrl: `svg:${v}`, displayOrder: i, isPrimary: i === 0, altText: `${d.name} ${v} view` })) },
+        images: { create: d.photos.map((f, i) => ({ imageUrl: `/photos/${f}`, displayOrder: i, isPrimary: i === 0, altText: `${d.name} photo ${i + 1}` })) },
       },
     });
     const rows = d.colors.flatMap((c) =>
@@ -140,24 +141,15 @@ async function main() {
     );
     await prisma.productVariant.createMany({ data: rows });
     const created = await prisma.productVariant.findMany({ where: { productId: product.id }, select: { id: true } });
-    const stocks = created.map((v) => ({ variantId: v.id, quantity: Math.floor(Math.random() * 18) + 2, lowStockThreshold: 5 }));
+    const stocks = created.map((v) => ({ variantId: v.id, quantity: 10, lowStockThreshold: 3 }));
     await prisma.inventory.createMany({ data: stocks });
     const invs = await prisma.inventory.findMany({ where: { variantId: { in: created.map((v) => v.id) } }, select: { id: true, quantity: true } });
     await prisma.inventoryTransaction.createMany({ data: invs.map((i) => ({ inventoryId: i.id, quantity: i.quantity, type: 'INITIAL' as const, reason: 'Seed data' })) });
     console.log('Created product:', d.name);
   }
 
-  /* ── real photographs for the demo products (public/photos, see docs/PHOTO-CREDITS.md) ── */
-  for (const d of DEMO) {
-    const s = slug(d.name);
-    const product = await prisma.product.findUnique({ where: { slug: s }, include: { images: true } });
-    if (!product || product.images.some((i) => i.imageUrl.startsWith('/photos/'))) continue;
-    await prisma.productImage.deleteMany({ where: { productId: product.id, imageUrl: { startsWith: 'svg:' } } });
-    await prisma.productImage.createMany({
-      data: [1, 2, 3, 4].map((n) => ({ productId: product.id, imageUrl: `/photos/${s}-${n}.jpg`, altText: `${d.name} photo ${n}`, displayOrder: n - 1, isPrimary: n === 1 })),
-    });
-    console.log('Photos attached:', d.name);
-  }
+  // Only show categories that actually have products (admins can switch others back on).
+  await prisma.category.updateMany({ where: { products: { none: {} } }, data: { isActive: false } });
   console.log('Seed complete');
 }
 

@@ -9,15 +9,17 @@ const inter = localFont({ src: './fonts/Inter-Variable.woff2', variable: '--font
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3100'),
-  title: { default: `${BRAND.name} | Premium everyday wear`, template: `%s | ${BRAND.name}` },
+  title: { default: `${BRAND.name} | ${BRAND.tagline}`, template: `%s | ${BRAND.name}` },
   description: BRAND.description,
+  applicationName: BRAND.name,
   openGraph: { title: BRAND.name, description: BRAND.description, siteName: BRAND.name, type: 'website' },
+  twitter: { card: 'summary_large_image', title: BRAND.name, description: BRAND.description },
 };
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#0a0a0a',
+  themeColor: '#000000',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

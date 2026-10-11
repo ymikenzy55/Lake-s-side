@@ -57,7 +57,7 @@ describe('utils', () => {
   it('slugifies', () => expect(slugify('  Everyday Heavy Hoodie! ')).toBe('everyday-heavy-hoodie'));
   it('creates unique order numbers', () => {
     const a = generateOrderNumber();
-    expect(a).toMatch(/^CF-\d{6}-[A-Z2-9]{4}$/);
+    expect(a).toMatch(/^LS-\d{6}-[A-Z2-9]{4}$/);
     expect(generateOrderNumber()).not.toBe(a);
   });
   it('detects uuids', () => {

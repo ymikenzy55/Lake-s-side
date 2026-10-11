@@ -11,11 +11,12 @@ This project is configured for Vercel's Next.js build and Git-based deployments.
 
 ## 1. Configure Vercel
 
-1. Import `ymikenzy55/Splendor-s-e-commerce-Website` from the Vercel dashboard.
+1. Import `ymikenzy55/Lake-s-side` from the Vercel dashboard.
 2. Keep the project root at `./`; leave framework detection and build settings on their Next.js defaults.
 3. Select `master` as the production branch.
-4. Use **Node.js 22.x** in Project Settings → General → Node.js Version.
-5. Add the production environment variables below before deploying.
+4. Node.js 22.x is selected automatically from `engines` in `package.json`.
+5. Functions run in Frankfurt (`fra1`, set in `vercel.json`), next to the Neon database in `eu-central-1`. If you move the database, change the region to match.
+6. Add the production environment variables below before deploying.
 
 Vercel detects Next.js automatically. The existing `postinstall` script generates the Prisma client during installation, and `npm run build` is the production build command.
 
@@ -52,6 +53,8 @@ Add secret values through Vercel's Environment Variables settings, never to GitH
 
 ## 2. Initialize the production database
 
+> **Already set up:** the Neon database used during development (`ep-small-tooth-bap2bxmt`, `eu-central-1`) is already migrated and seeded. If you use it for production, skip this section and just add its connection strings to Vercel.
+
 After importing and linking the Vercel project with the CLI, run these commands in the project directory. They use the **Production** environment variables configured in Vercel:
 
 ```powershell
@@ -60,7 +63,7 @@ vercel env run --environment=production -- npm run db:deploy
 vercel env run --environment=production -- npm run db:seed
 ```
 
-The first migration creates the schema and search indexes. The seed creates reference data and the administrator from `ADMIN_EMAIL` and `ADMIN_PASSWORD`. Set `SEED_DEMO=false` in the Vercel Production environment before seeding to skip placeholder demonstration products. Run the seed once for initial setup; on a later run it resets the configured administrator's password.
+The first migration creates the schema and search indexes. The seed creates reference data, the administrator from `ADMIN_EMAIL` and `ADMIN_PASSWORD`, and The Lakeside's catalogue (the Where Calm Meets Clarity and Find Peace By The Water tees). `SEED_DEMO=false` skips the catalogue. Run the seed once for initial setup; on a later run it resets the configured administrator's password.
 
 The initial Git import may start a build before the database schema is ready. If prerendering fails, initialize the database with the commands above and redeploy the latest commit from Vercel.
 

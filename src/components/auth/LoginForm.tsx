@@ -5,10 +5,11 @@ import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
 import { loginAction } from '@/domains/auth/actions';
 import { PasswordField } from '@/components/ui/PasswordField';
+import { GoogleButton } from './GoogleButton';
 
-export function LoginForm({ redirectTo, justReset }: { redirectTo: string; justReset: boolean }) {
+export function LoginForm({ redirectTo, justReset, google = false, initialError = '' }: { redirectTo: string; justReset: boolean; google?: boolean; initialError?: string }) {
   const router = useRouter();
-  const [error, setError] = useState('');
+  const [error, setError] = useState(initialError);
   const [pending, start] = useTransition();
 
   return (
@@ -18,8 +19,10 @@ export function LoginForm({ redirectTo, justReset }: { redirectTo: string; justR
 
       {justReset && <p className="alert alert-ok mt-5">Password updated. Please sign in.</p>}
 
+      {google && <div className="mt-7"><GoogleButton redirectTo={redirectTo} /></div>}
+
       <form method="post"
-        className="mt-7 grid gap-4"
+        className={`${google ? '' : 'mt-7 '}grid gap-4`}
         onSubmit={(e) => {
           e.preventDefault();
           setError('');

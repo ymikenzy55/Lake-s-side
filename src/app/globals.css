@@ -144,6 +144,15 @@ select.field { appearance: none; background-image: url("data:image/svg+xml,%3Csv
 .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
 .reveal.is-visible { opacity: 1; transform: none; }
 
+/* ───────── Brand motion: WhatsApp pulse, slogan marquee, lookbook zoom ───────── */
+@keyframes wa-ring { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, .55); } 80%, 100% { box-shadow: 0 0 0 16px rgba(37, 211, 102, 0); } }
+.wa-pulse { animation: wa-ring 2.4s ease-out infinite; }
+@keyframes marquee { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
+.marquee-track { display: flex; width: max-content; animation: marquee 38s linear infinite; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+.zoom-img { transition: transform .9s var(--ease); }
+.group:hover .zoom-img { transform: scale(1.06); }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
   .reveal { opacity: 1; transform: none; }

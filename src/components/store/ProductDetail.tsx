@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState, useTransition } from 'react';
 import { ProductArt } from '@/components/svg/ProductArt';
-import { IconCheck, IconMinus, IconPlus } from '@/components/layout/Icons';
+import { IconCheck, IconMinus, IconPlus, IconShare, IconWhatsApp } from '@/components/layout/Icons';
+import { whatsappLink } from '@/lib/social';
 import { addToCartAction } from '@/domains/cart/actions';
 import { bumpCart } from '@/lib/cart-events';
 import { money } from '@/lib/utils';
@@ -35,7 +36,7 @@ export interface DetailProduct {
 
 const FALLBACK_VIEWS = ['svg:front', 'svg:back', 'svg:detail', 'svg:studio'];
 
-export function ProductDetail({ product }: { product: DetailProduct }) {
+export function ProductDetail({ product, whatsapp, url }: { product: DetailProduct; whatsapp?: string; url?: string }) {
   const colors = useMemo(() => {
     const m = new Map<string, DetailProduct['variants'][number]['color']>();
     product.variants.forEach((v) => m.has(v.color.id) || m.set(v.color.id, v.color));
@@ -48,6 +49,18 @@ export function ProductDetail({ product }: { product: DetailProduct }) {
   const [qty, setQty] = useState(1);
   const [active, setActive] = useState(0);
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
+  const [shared, setShared] = useState(false);
+  const share = async () => {
+    const data = { title: product.name, text: `${product.name} by The Lakeside: Where calm meets clarity.`, url: window.location.href };
+    try {
+      if (navigator.share) return await navigator.share(data);
+      await navigator.clipboard.writeText(data.url);
+      setShared(true);
+      window.setTimeout(() => setShared(false), 2000);
+    } catch {
+      /* share sheet dismissed */
+    }
+  };
   const [pending, start] = useTransition();
   const router = useRouter();
 
@@ -199,6 +212,27 @@ export function ProductDetail({ product }: { product: DetailProduct }) {
               <p className="text-[12px] text-muted">Total price</p>
               <p className="text-[26px] font-semibold tracking-tight">{money(unit * qty)}</p>
             </div>
+          </div>
+
+          <div className="mt-5 grid grid-cols-[1fr_auto] gap-2">
+            {whatsapp && (
+              <a
+                href={whatsappLink(
+                  whatsapp,
+                  `Hi The Lakeside, I'd like to order the ${product.name}` +
+                    `${color ? ` (${color.name}` : ''}${variant ? `, size ${variant.size.name}` : ''}${color ? ')' : ''}` +
+                    ` x${qty}.${url ? ` ${url}` : ''}`,
+                )}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn h-12 border border-[#25D366] bg-[#25D366]/10 text-[#0d7a3b] hover:bg-[#25D366] hover:text-white"
+              >
+                <IconWhatsApp width={20} height={20} /> Order on WhatsApp
+              </a>
+            )}
+            <button type="button" onClick={share} className="btn btn-soft h-12 px-4" aria-label="Share this tee">
+              <IconShare width={20} height={20} /> <span className="hidden sm:inline">{shared ? 'Link copied' : 'Share'}</span>
+            </button>
           </div>
 
           {msg && (

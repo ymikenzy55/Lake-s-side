@@ -1,19 +1,16 @@
 import { PageBanner } from '@/components/store/PageBanner';
 import { ContactForm } from '@/components/store/ContactForm';
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
+import Link from 'next/link';
 import { getSettings } from '@/domains/settings/service';
+import { SocialLinks } from '@/components/layout/SocialLinks';
+import { IconArrow, IconPin } from '@/components/layout/Icons';
 
 export const metadata = { title: 'Contact us', description: 'Questions about an order, sizing or wholesale? Send us a message.' };
 export const revalidate = 300;
 
 export default async function ContactPage() {
   const s = await getSettings();
-  const cards: [string, string, string | null][] = [
-    ['Email', s.contact_email, `mailto:${s.contact_email}`],
-    ['Phone', s.contact_phone, `tel:${s.contact_phone.replace(/\s/g, '')}`],
-    ['WhatsApp', s.whatsapp || 'Chat with us', s.whatsapp ? `https://wa.me/${s.whatsapp.replace(/\D/g, '')}` : null],
-    ['Visit', s.address, '/visit'],
-  ];
   return (
     <>
       <PageBanner word="Contact" image="/photos/banner-rack.jpg" />
@@ -23,18 +20,22 @@ export default async function ContactPage() {
         <p className="mt-3 max-w-2xl text-ink-2">Questions about an order, sizing, wholesale or anything else. Send a message and we will reply within one working day.</p>
         <div className="mt-10 grid items-start gap-10 lg:grid-cols-[1.3fr_1fr]">
           <ContactForm />
-          <ul className="grid gap-3">
-            {cards.map(([t, v, href]) => (
-              <li key={t} className="card-soft min-w-0 p-5">
-                <p className="eyebrow">{t}</p>
-                {href ? (
-                  <a href={href} className="mt-1 block break-words text-[15px] font-medium underline-offset-4 hover:underline" {...(href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{v}</a>
-                ) : (
-                  <p className="mt-1 break-words text-[15px] font-medium">{v}</p>
-                )}
-              </li>
-            ))}
-          </ul>
+          <div className="grid gap-3">
+            <div className="card-soft p-6">
+              <p className="eyebrow">Reach us directly</p>
+              <p className="mt-2 text-[14px] text-ink-2">Tap an icon to chat, call, email or follow us.</p>
+              <SocialLinks settings={s} size="lg" tone="ink" className="mt-4" />
+            </div>
+            <Link href="/visit" className="card-soft group flex items-center gap-4 p-6 transition-colors hover:bg-surface-2">
+              <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-ink text-white transition-colors group-hover:bg-lake"><IconPin width={26} height={26} /></span>
+              <span>
+                <span className="eyebrow block">Visit the shop</span>
+                <span className="mt-1 block text-[15px] font-semibold">New Station, Nkawkaw</span>
+                <span className="text-[13px] text-muted">Map and directions</span>
+              </span>
+              <IconArrow className="ml-auto transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>
         </div>
       </div>
     </>

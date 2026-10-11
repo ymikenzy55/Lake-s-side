@@ -29,10 +29,10 @@ export function SettingsForm({ initial, paystackReady, emailReady }: { initial: 
         <div className="grid gap-4 sm:grid-cols-2">
           {inp('contact_email', 'Email (also receives new-order alerts)', { type: 'email' })}
           {inp('contact_phone', 'Phone')}
-          {inp('whatsapp', 'WhatsApp number (digits, with country code)')}
+          {inp('whatsapp', 'WhatsApp numbers (digits with country code, separate several with commas)')}
           {inp('address', 'Location')}
           {inp('instagram', 'Instagram link', { placeholder: 'https://instagram.com/…' })}
-          {inp('tiktok', 'TikTok link')}
+          {inp('tiktok', 'TikTok link', { placeholder: 'https://www.tiktok.com/@yourhandle' })}
         </div>
       </section>
 

@@ -14,7 +14,7 @@ export function NewsletterCta() {
         <div className="pointer-events-none absolute -right-16 -top-20 h-64 w-64 rounded-full bg-white/5 blur-2xl" />
         <div className="relative grid grid-cols-1 gap-8 md:grid-cols-[1.2fr_1fr] md:items-end">
           <div className="min-w-0">
-            <h2 id="cta-h" className="text-[26px] font-semibold leading-tight md:text-[34px]">Ready to get<br />our new stuff?</h2>
+            <h2 id="cta-h" className="text-[26px] font-semibold leading-tight md:text-[34px]">Be first to the<br />next drop.</h2>
             <form
               method="post"
               className="mt-6 flex max-w-md items-center gap-2 rounded-full bg-white/10 p-1.5 pl-4 ring-1 ring-white/15"
@@ -36,7 +36,7 @@ export function NewsletterCta() {
             {msg && <p role="status" className={`mt-3 text-[13px] ${msg.ok ? 'text-white' : 'text-[#ffb4a9]'}`}>{msg.text}</p>}
           </div>
           <div className="min-w-0 text-[13px] leading-relaxed text-white/70 md:text-right">
-            <p className="font-semibold text-white">Stuff for homes and hustle.</p>
+            <p className="font-semibold text-white">Calm drops. Clear updates.</p>
             <p>Get first access to new drops, restocks and members-only offers. No spam, unsubscribe anytime.</p>
           </div>
         </div>

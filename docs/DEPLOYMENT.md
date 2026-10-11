@@ -53,6 +53,7 @@ Add secrets only through Vercel's Environment Variables settings, never to sourc
 - **Email:** configure `BREVO_API_KEY` and sender settings, or the `SMTP_*` settings.
 - **Analytics:** `NEXT_PUBLIC_GA_MEASUREMENT_ID` and `NEXT_PUBLIC_META_PIXEL_ID`.
 - **AI-assisted descriptions:** `ANTHROPIC_API_KEY`.
+- **Sign in with Google:** `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`. In Google Cloud Console create an OAuth client (Web application) with the authorised redirect URI `https://<your-domain>/api/auth/google/callback` (it must match `NEXT_PUBLIC_APP_URL` exactly). The Google buttons appear on `/login` and `/register` only when both variables are set.
 
 ## Database changes
 

@@ -5,6 +5,8 @@ import { ProductDetail, type DetailProduct } from '@/components/store/ProductDet
 import { ProductCard } from '@/components/store/ProductCard';
 import { breadcrumbJsonLd } from '@/components/ui/Breadcrumbs';
 import { APP_URL } from '@/lib/constants';
+import { getSettings } from '@/domains/settings/service';
+import { whatsappNumbers } from '@/lib/social';
 
 export const revalidate = 60;
 
@@ -27,7 +29,7 @@ export default async function ProductPage({ params }: PageProps) {
   const product = await ProductService.getProductBySlug(slug);
   if (!product || !product.isActive) notFound();
 
-  const related = await ProductService.getRelated(product.id, product.categoryId, 4);
+  const [related, settings] = await Promise.all([ProductService.getRelated(product.id, product.categoryId, 4), getSettings()]);
 
   const data: DetailProduct = {
     id: product.id,
@@ -80,7 +82,7 @@ export default async function ProductPage({ params }: PageProps) {
           ).replace(/</g, '\\u003c'),
         }}
       />
-      <ProductDetail product={data} />
+      <ProductDetail product={data} whatsapp={whatsappNumbers(settings.whatsapp)[0]} url={`${APP_URL}/products/${slug}`} />
       {related.length > 0 && (
         <section className="container-x mt-20">
           <h2 className="mb-6 text-[22px] md:text-[24px]">You may also like</h2>

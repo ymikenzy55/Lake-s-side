@@ -1,10 +1,12 @@
 import Link from 'next/link';
 import { Logo, LogoFull } from '@/components/brand/Logo';
 import { getSettings } from '@/domains/settings/service';
+import { SocialLinks } from './SocialLinks';
+import { IconPin } from './Icons';
 
 export async function Footer() {
   const s = await getSettings();
-  const col = 'grid content-start gap-2 text-[13px] text-muted [&_a]:transition-colors [&_a:hover]:text-ink';
+  const col = 'grid content-start gap-2 text-[13px] text-muted [&>a]:transition-colors [&>a:hover]:text-ink';
   const h = 'mb-1 text-[12px] font-semibold text-ink';
   return (
     <footer className="mt-16 border-t border-line pb-28 pt-12 print:hidden md:pb-10">
@@ -32,13 +34,9 @@ export async function Footer() {
           <Link href="/about#size-guide">Size guide</Link>
         </div>
         <div className={col}>
-          <p className={h}>Contact</p>
-          <a href={`mailto:${s.contact_email}`}>{s.contact_email}</a>
-          <a href={`tel:${s.contact_phone.replace(/\s/g, '')}`}>{s.contact_phone}</a>
-          {s.whatsapp && <a href={`https://wa.me/${s.whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer">WhatsApp</a>}
-          {s.instagram && <a href={s.instagram} target="_blank" rel="noopener noreferrer">Instagram</a>}
-          {s.tiktok && <a href={s.tiktok} target="_blank" rel="noopener noreferrer">TikTok</a>}
-          <Link href="/visit">{s.address}</Link>
+          <p className={h}>Connect</p>
+          <SocialLinks settings={s} size="sm" />
+          <Link href="/visit" className="mt-2 inline-flex items-center gap-1.5"><IconPin width={16} height={16} /> Find us in Nkawkaw</Link>
         </div>
       </div>
       <div className="container-x mt-10 flex flex-col gap-1 border-t border-line pt-5 text-[12px] text-muted md:flex-row md:justify-between">

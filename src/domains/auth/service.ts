@@ -6,6 +6,7 @@ import { PASSWORD_RESET_TOKEN_DURATION, APP_URL } from '@/lib/constants';
 import { sendEmail, emailLayout, emailButton } from '@/services/brevo';
 import { CartService } from '@/domains/cart/service';
 import type { RegisterData as RegisterInput, LoginData as LoginInput } from '@/lib/validations/auth';
+import type { GoogleProfile } from '@/services/google';
 
 /** User-facing error: safe to show to the visitor. */
 export class AuthServiceError extends Error {}
@@ -59,6 +60,46 @@ export class AuthService {
     await CartService.mergeGuestCart(user.id).catch(() => {}); // no-op (no query) unless a guest cart cookie exists
 
     return { id: user.id, email: user.email, firstName: user.firstName, lastName: user.lastName, role: user.role };
+  }
+
+  /**
+   * Sign in or register with a Google profile. Matches by Google id first, then links an existing
+   * account with the same (Google-verified) email, otherwise creates a customer account.
+   */
+  static async loginWithGoogle(profile: GoogleProfile) {
+    if (!profile.emailVerified) throw new AuthServiceError('Your Google email is not verified.');
+
+    let user = await prisma.user.findUnique({ where: { googleId: profile.sub } });
+    if (!user) {
+      const byEmail = await prisma.user.findUnique({ where: { email: profile.email } });
+      if (byEmail) {
+        user = await prisma.user.update({
+          where: { id: byEmail.id },
+          data: { googleId: profile.sub, emailVerified: true, emailVerifiedAt: byEmail.emailVerifiedAt ?? new Date() },
+        });
+      } else {
+        user = await prisma.user.create({
+          data: {
+            email: profile.email,
+            googleId: profile.sub,
+            // No password yet: a random, unknown one. "Forgot password" lets them set one later.
+            passwordHash: await hashPassword(randomToken(32)),
+            firstName: profile.givenName,
+            lastName: profile.familyName,
+            role: 'CUSTOMER',
+            emailVerified: true,
+            emailVerifiedAt: new Date(),
+            customer: { create: {} },
+          },
+        });
+      }
+    }
+    if (!user.isActive) throw new AuthServiceError('This account is disabled. Please contact support.');
+
+    await createSession(user.id);
+    void prisma.user.update({ where: { id: user.id }, data: { lastLoginAt: new Date() } }).catch(() => {});
+    await CartService.mergeGuestCart(user.id).catch(() => {});
+    return { id: user.id, role: user.role };
   }
 
   static async logout() {

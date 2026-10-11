@@ -5,6 +5,7 @@ import { getSettings } from '@/domains/settings/service';
 import { BRAND } from '@/lib/config/brand';
 import { APP_URL } from '@/lib/constants';
 import { mapLinks } from '@/lib/maps';
+import { SocialLinks } from '@/components/layout/SocialLinks';
 
 export const metadata = {
   title: 'Visit us',
@@ -17,8 +18,6 @@ const ext = { target: '_blank', rel: 'noopener noreferrer' } as const;
 export default async function VisitPage() {
   const s = await getSettings();
   const maps = mapLinks(s.address);
-  const phone = s.contact_phone.replace(/\s/g, '');
-  const wa = s.whatsapp.replace(/\D/g, '');
 
   // schema.org LocalBusiness data so search engines can show the shop on Maps and in results
   const jsonLd = {
@@ -76,10 +75,7 @@ export default async function VisitPage() {
             <div className="card-soft grid gap-2 p-5">
               <p className="eyebrow">Before you come</p>
               <p className="text-[14px] text-ink-2">Call or message us to check your size is in stock.</p>
-              <div className="mt-1 flex flex-wrap gap-2">
-                <a href={`tel:${phone}`} className="btn btn-ghost btn-sm">Call {s.contact_phone}</a>
-                {wa && <a href={`https://wa.me/${wa}`} {...ext} className="btn btn-ghost btn-sm">WhatsApp</a>}
-              </div>
+              <SocialLinks settings={s} only={['whatsapp', 'phone']} tone="ink" className="mt-1" />
             </div>
           </div>
         </div>

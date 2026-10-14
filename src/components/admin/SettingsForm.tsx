@@ -5,7 +5,8 @@ import { Flash, Toggle, useAdminRun } from './hooks';
 import { saveSettingsAction } from '@/domains/admin/content-actions';
 import type { Settings } from '@/domains/settings/service';
 
-export function SettingsForm({ initial, paystackReady, emailReady }: { initial: Settings; paystackReady: boolean; emailReady: boolean }) {
+/** `showStatus`: connection badges, only for the store owner (super admin). Setup steps live in docs/DEPLOYMENT.md. */
+export function SettingsForm({ initial, paystackReady, emailReady, showStatus = false }: { initial: Settings; paystackReady: boolean; emailReady: boolean; showStatus?: boolean }) {
   const { run, pending, msg } = useAdminRun();
   const [s, setS] = useState<Settings>(initial);
   const set = (k: keyof Settings, v: string) => setS((x) => ({ ...x, [k]: v }));
@@ -43,11 +44,13 @@ export function SettingsForm({ initial, paystackReady, emailReady }: { initial: 
           {inp('free_shipping_threshold', 'Free delivery over (GHS)', { type: 'number', min: 0, step: '0.01' })}
         </div>
         <Toggle label="Accept cash on delivery" checked={s.cod_enabled === 'true'} onChange={(v) => set('cod_enabled', String(v))} />
-        <Toggle label="Accept mobile money / card (Paystack)" checked={s.paystack_enabled === 'true'} onChange={(v) => set('paystack_enabled', String(v))} />
-        <ul className="grid gap-1.5 text-[13px]">
-          <li className={paystackReady ? 'text-ok' : 'text-[#b45309]'}>{paystackReady ? 'Paystack keys detected' : 'Paystack keys not set. Add PAYSTACK_SECRET_KEY to the server environment to enable online payment.'}</li>
-          <li className={emailReady ? 'text-ok' : 'text-[#b45309]'}>{emailReady ? 'Email delivery connected' : 'Email is not set up, so order and password-reset emails are NOT delivered. Add SMTP_HOST, SMTP_USER and SMTP_PASS (for example a Gmail app password) or a BREVO_API_KEY to the server environment.'}</li>
-        </ul>
+        {paystackReady && <Toggle label="Accept mobile money / card (Paystack)" checked={s.paystack_enabled === 'true'} onChange={(v) => set('paystack_enabled', String(v))} />}
+        {showStatus && (
+          <div className="flex flex-wrap gap-2 text-[12px]">
+            <span className={`badge ${paystackReady ? 'badge-ok' : 'badge-warn'}`}>Online payment {paystackReady ? 'connected' : 'not connected'}</span>
+            <span className={`badge ${emailReady ? 'badge-ok' : 'badge-warn'}`}>Order emails {emailReady ? 'connected' : 'not connected'}</span>
+          </div>
+        )}
       </section>
 
       <div className="pb-safe sticky bottom-[76px] z-20 grid gap-2 rounded-3xl border border-line bg-white/95 p-3 backdrop-blur lg:bottom-4">

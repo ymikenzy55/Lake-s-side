@@ -5,6 +5,12 @@ import { requireAdmin } from '@/lib/auth/session';
 import { revalidatePath } from 'next/cache';
 import { TransactionType } from '@prisma/client';
 
+/** Show intended messages (e.g. "Insufficient stock"); hide database/internal errors behind the fallback. */
+function safeError(error: unknown, fallback: string): string {
+  if (!(error instanceof Error) || error.name.startsWith('PrismaClient') || error.message.length > 160) return fallback;
+  return error.message;
+}
+
 export type ActionResponse<T = void> = {
   success: boolean;
   data?: T;
@@ -28,7 +34,7 @@ export async function getInventoryAction(variantId: string) {
     console.error('Get inventory error:', error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Failed to get inventory',
+      error: safeError(error, 'Failed to get inventory'),
     };
   }
 }
@@ -48,7 +54,7 @@ export async function checkStockAction(variantId: string, quantity: number) {
     console.error('Check stock error:', error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Failed to check stock',
+      error: safeError(error, 'Failed to check stock'),
     };
   }
 }
@@ -78,7 +84,7 @@ export async function adjustInventoryAction(data: {
     console.error('Adjust inventory error:', error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Failed to adjust inventory',
+      error: safeError(error, 'Failed to adjust inventory'),
     };
   }
 }
@@ -114,7 +120,7 @@ export async function setInventoryQuantityAction(
     console.error('Set inventory error:', error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Failed to set inventory',
+      error: safeError(error, 'Failed to set inventory'),
     };
   }
 }
@@ -136,7 +142,7 @@ export async function getTransactionHistoryAction(variantId: string, limit?: num
     console.error('Get transaction history error:', error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Failed to get history',
+      error: safeError(error, 'Failed to get history'),
     };
   }
 }
@@ -158,7 +164,7 @@ export async function getLowStockVariantsAction() {
     console.error('Get low stock variants error:', error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Failed to get low stock variants',
+      error: safeError(error, 'Failed to get low stock variants'),
     };
   }
 }
@@ -180,7 +186,7 @@ export async function getOutOfStockVariantsAction() {
     console.error('Get out of stock variants error:', error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Failed to get out of stock variants',
+      error: safeError(error, 'Failed to get out of stock variants'),
     };
   }
 }
@@ -213,7 +219,7 @@ export async function updateLowStockThresholdAction(
     console.error('Update threshold error:', error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Failed to update threshold',
+      error: safeError(error, 'Failed to update threshold'),
     };
   }
 }
@@ -248,7 +254,7 @@ export async function recordDamageAction(
     console.error('Record damage error:', error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Failed to record damage',
+      error: safeError(error, 'Failed to record damage'),
     };
   }
 }
@@ -285,7 +291,7 @@ export async function processReturnAction(
     console.error('Process return error:', error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Failed to process return',
+      error: safeError(error, 'Failed to process return'),
     };
   }
 }
@@ -307,7 +313,7 @@ export async function getInventorySummaryAction() {
     console.error('Get inventory summary error:', error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Failed to get summary',
+      error: safeError(error, 'Failed to get summary'),
     };
   }
 }

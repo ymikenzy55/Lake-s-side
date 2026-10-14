@@ -21,6 +21,8 @@ const nextConfig: NextConfig = {
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,
+  // Pages read settings from Neon while prerendering; allow for slow connections and cold starts.
+  staticPageGenerationTimeout: 180,
   experimental: {
     // The dev MCP server appends every page view to .next/dev/logs/next-development.log. On Windows,
     // Turbopack's watcher picks that write up as a change, rebuilds and reloads the page, which writes

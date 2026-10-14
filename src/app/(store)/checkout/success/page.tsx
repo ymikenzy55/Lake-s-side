@@ -7,6 +7,7 @@ import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { LiveRefresh } from '@/components/layout/LiveRefresh';
 import { canAccessOrder } from '@/lib/order-access';
 import { IconCheck } from '@/components/layout/Icons';
+import { emailProvider } from '@/services/brevo';
 
 export const dynamic = 'force-dynamic';
 export const metadata = { title: 'Order confirmed', robots: { index: false } };
@@ -34,7 +35,9 @@ export default async function SuccessPage({ searchParams }: { searchParams: Prom
         <p className="mt-2 text-muted">
           {unpaid
             ? 'We could not confirm your payment. If you were charged, it will be confirmed automatically in a few minutes.'
-            : `Your receipt has been sent to ${order.customerEmail}. Keep your tracking ID below to follow the order.`}
+            : emailProvider()
+              ? `Your receipt has been sent to ${order.customerEmail}. Keep your tracking ID below to follow the order.`
+              : 'Keep your tracking ID below to follow the order. You can view or print your receipt any time.'}
         </p>
         <div className="mt-5 grid justify-items-center gap-2">
           <p className="text-[11px] font-semibold uppercase tracking-wider text-muted">Your tracking ID</p>

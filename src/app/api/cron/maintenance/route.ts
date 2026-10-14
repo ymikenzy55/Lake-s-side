@@ -20,7 +20,7 @@ function authorised(req: Request): boolean {
  * releases stock held by abandoned card orders, prunes expired sessions / tokens / stale guest carts.
  */
 export async function GET(req: Request) {
-  if (!process.env.CRON_SECRET) return NextResponse.json({ error: 'CRON_SECRET is not configured' }, { status: 503 });
+  if (!process.env.CRON_SECRET) return NextResponse.json({ error: 'Unavailable' }, { status: 503 });
   if (!authorised(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const now = new Date();

@@ -36,8 +36,11 @@ export class TtlCache<V> {
  * attempted, but if the database is unreachable the last good value is served (up to `staleMs`).
  * Concurrent callers share one in-flight fetch. Cleared by `clearReadCache()` after admin edits.
  */
-const readStore = new Map<string, { v: unknown; fresh: number; stale: number }>();
-const inflight = new Map<string, Promise<unknown>>();
+// Kept on globalThis: Next bundles route handlers and pages separately, each with its own copy of this
+// module, so a module-level Map cleared from an API route would not be the one pages read from.
+const g = globalThis as unknown as { __lsReadStore?: Map<string, { v: unknown; fresh: number; stale: number }>; __lsInflight?: Map<string, Promise<unknown>> };
+const readStore = (g.__lsReadStore ??= new Map());
+const inflight = (g.__lsInflight ??= new Map());
 
 export async function cachedRead<T>(key: string, ttlMs: number, fn: () => Promise<T>, staleMs = 15 * 60_000): Promise<T> {
   const now = Date.now();
